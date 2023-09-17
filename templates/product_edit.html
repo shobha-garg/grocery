@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href={{url_for('static', filename='edit.css')}} />
+    <title>Edit | Product</title>
+</head>
+<body>
+    <header>
+        <div class="heading">
+        </div>
+      </header>
+    <main>
+        <div class="edit-form">
+            <form method="POST" action="{{ url_for('edit_prod', pid=product.pid) }}" enctype="multipart/form-data">
+                <div class="input-box">
+                    Product Name <br>
+                    <input type="text" name="name" width="95px" placeholder="{{product.product_name}}"  autocomplete="off" />
+                    <hr />
+                    Image <br>
+                    <input type="file" name="file"  />
+                    <hr />
+                    Price/unit <br>
+                    <input type="text" name="price"  placeholder="{{product.price}}" autocomplete="off"/>
+                    <hr />
+                    Quantity <br>
+                    <input type="text" name="Quantity" placeholder={{product.quantity}} autocomplete="off"/>
+                    <hr />
+                </div>
+                <div style="display: flex;align-items: center">
+                    <input type="submit" id="product_submit"  value="Submit" />
+                    <a href="{{url_for('home')}}" class="btn btn-warning">Home</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

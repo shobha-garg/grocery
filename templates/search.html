@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" /> 
+    <link rel="stylesheet" href="{{url_for('static', filename='search.css')}}" >
+</head>
+<body>
+  <header>
+    <div class="heading">
+    </div>
+  </header>
+  <br><br>
+  <nav>
+    <h4>
+      <a href="/dashboard" class="nav-link">Home</a>
+      <a href="/search/{{user_id}}" class="nav-link">Search</a>
+      <a href="/view_cart/{{user_id}}" class="nav-link">View Cart</a>
+      <a href="{{ url_for('logout_user') }}" onclick="myFunction()" class="nav-link">Logout</a>
+    </h4>
+  </nav>  
+  <main>
+    {% if error %}
+        <div class="alert alert-danger alert-dismissible" role="alert" style="position: fixed;z-index: 999; bottom: 0;margin: auto;left: 0;right: 0;">
+            {{ error }}
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        </div>
+    {% endif %}
+    </main>
+    <div class="body">
+        <h1>Search</h1>
+        <form method="POST" action="/search/{{user_id}}">
+            <label for="section">Search by Section/Category:</label>
+            <input type="text" name="searched" autocomplete="off">
+            <button type="submit" class="btn btn-primary" name="search_type" value="section">Search</button>
+        </form>
+        <br><br>
+        <form method="POST" action="/search/{{user_id}}">
+            <label for="price">Search by Price:</label>
+            <input type="number" name="price" id="price" step="1" autocomplete="off">
+            <button type="submit" class="btn btn-primary" name="search_type" value="price">Search</button>
+        </form>
+        <br><br>
+        <a href="/search/{{user_id}}" class="btn btn-danger">Clear Search</a>
+        
+    </div>
+      {% if section_names %}
+          <br>
+          {% for section_name in section_names %}
+              <h2 class="sub-heading">{{ section_name }}</h2>
+              {% for product in products %}
+              {% if product.section.section_name == section_name %}
+              <div class="flex-item-1">
+                  <div class="product-card">
+                    <img src="/static/docs/uploads/{{ product.filepath }}" alt="Card image cap" />
+                    <h5 class="card-title"><b>Product-name: </b>{{ product.product_name }}</h5>
+                    <p class="card-text"><strong>Price | ₹ {{ product.price }} / kg</strong></p>
+                    <form action="/add_to_cart/{{ user_id }}/{{ product.pid }}" method="POST">
+                      <input type="hidden" name="pid" value="{{ product.pid }}">
+                      {% if product.quantity == 0 %}
+                        <input type="hidden" name="quantity" value="{{ product.quantity }}">
+                        <button onclick="showAlert()" class="btn btn-primary">Out of stock</button>
+                      {% else %}
+                        <input type="number" name="quantity" min="1" max="{{max_quantity}}" value="1"><br><br>
+                        <button type="submit" class="btn btn-primary">+</button>
+                      {% endif %}
+                    </form>
+                  </div>
+                </div>
+                  {%endif%}
+              {% endfor %}
+          {% endfor %}
+      {% endif %}
+      {% if products and not section_names %}
+          <h2 class="sub-heading">Search Results</h2>
+          <br>
+          {% for product in products %}
+          <div class="flex-item-1">
+              <div class="product-card">
+                <img src="/static/docs/uploads/{{ product.filepath }}" alt="Card image cap" />
+                <h5 class="card-title"><b>Product-name: </b>{{ product.product_name }}</h5>
+                <p class="card-text"><strong>Price | ₹ {{ product.price }} / kg</strong></p>
+                <form action="/add_to_cart/{{ user_id }}/{{ product.pid }}" method="POST">
+                  <input type="hidden" name="pid" value="{{ product.pid }}">
+                  {% if product.quantity == 0 %}
+                    <input type="hidden" name="quantity" value="{{ product.quantity }}">
+                    <button onclick="showAlert()" class="btn btn-primary">Out of stock</button>
+                  {% else %}
+                    <input type="number" name="quantity" min="1" max="{{max_quantity}}" value="1"><br><br>
+                    <button type="submit" class="btn btn-primary">+</button>
+                  {% endif %}
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+      {% endif %}
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <script>
+        function showAlert() {
+            alert("Cannot add this product to cart. Item is out of stock.");
+        }
+        function myFunction() {
+          alert ("Logged out successfully. Hope to see you soon:)");
+      }
+      </script>
+</body>
+</html>

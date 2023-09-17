@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href={{url_for('static', filename='edit.css')}} />
+    <title>Manager's dashboard</title>
+</head>
+<body>
+    <header>
+        <div class="heading"></div>
+    </header>
+    <nav>
+    <h4>
+        <a href="#" class="nav-link">Home</a>
+        <a href="{{url_for('create_sec')}}" class="nav-link">Add new section</a>
+        <a href="{{ url_for('logout_admin') }}" onclick="myFunction()" class="nav-link">Logout</a>
+    </h4>
+    </nav>
+    <hr>
+    <br><br>   
+    <main>
+        {% if error %}
+            <div class="alert alert-danger alert-dismissible" role="alert" style="position: fixed;z-index: 999; bottom: 0;margin: auto;left: 0;right: 0;">
+                {{ error }}
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+        {% endif %}
+    </main>   
+    <div class="productbox">
+        <form method="POST" action="{{ url_for('create_sec') }}" enctype="multipart/form-data">
+            <div class="input-box">
+                <span class="box1">
+                    <h4>
+                        Section Name*<input type="text" name="name" placeholder="your section name" width="9=5px" required autocomplete="off" />
+                    </h4>
+                </span>
+                <hr />
+            </div>
+            <input type="submit" class="btn btn-primary" value="Submit" />
+        </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        function myFunction() {
+            alert ("Logged out successfully. Hope to see you soon:)");
+          }
+    </script>
+</body>
+
+</html>

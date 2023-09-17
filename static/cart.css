@@ -1,0 +1,37 @@
+.nav-link {
+    margin-left: 25px;
+    margin-right: 25px; 
+    text-decoration: none;
+  }
+.heading {
+  color: #ffffff;
+  background-color: #79794a;
+  height: 40px;
+  text-align: center;
+  margin: 0%;
+  margin-top: 0;
+  padding: 0%;
+}
+.href{
+    font-weight: normal;
+    font-size: large;
+}
+.cart{
+    margin-left: 200px;
+    margin-top: 100px;
+}
+.success{
+    font-size: 1.2em;
+    cursor: pointer;
+    
+}
+h3 ,h2{
+    font-weight: normal; /* This sets the font weight to normal, which is not bold */
+}
+.flex {
+    display: flex;
+    flex-direction: row;
+}
+.flex form {
+    margin-right: 10px; /* Adjust the value as needed to control the spacing */
+}
